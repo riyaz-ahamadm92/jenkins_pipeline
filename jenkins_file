@@ -10,7 +10,7 @@ pipeline {
                                 if [ $? -ne 0 ];then
                                 git clone https://github.com/riyaz-ahamadm92/C-projects.git
                                 fi
-                                cd C-projects
+                                cd C projects
                                 make clean target
                                 if [ $? -eq 0 ];then
                                 echo "build is success" '''
