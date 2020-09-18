@@ -3,8 +3,8 @@ pipeline {
 	
         stages {
 		stage ('STAGE 1') {
-		        stage ('C and java projects') {
-	                parallel {
+		  parallel {
+		           stage ('C and java projects') {
 		                     steps {
 				             sh '''#!/bin/bash
 				             git pull https://github.com/riyaz-ahamadm92/C-projects.git
@@ -20,8 +20,8 @@ pipeline {
 				             fi'''
 				             }	
 		                     }
-		          stage ('STAGE 2') {
-			                steps {
+		             stage ('STAGE 2') {
+			                 steps {
 				            sh '''#!/bin/bash
 				            git pull https://github.com/riyaz-ahamadm92/java-projects.git
 				            if [ $? -ne 0 ] ; then
@@ -52,8 +52,7 @@ pipeline {
 		}
 	}
 }
-}
-}
+
 
 
 
