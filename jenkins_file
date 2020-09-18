@@ -39,9 +39,9 @@ pipeline {
 				            }
 				       }
 			    stage ('STAGE 3') {
-		            agent { label 'slave_for_c' }
+		            agent { label 'master' }
 			                   steps {
-		                           echo 'This is slave_for_c with STAGE 3'
+		                           echo 'This is master with STAGE 3'
 		                           sh 'sleep 10'
 			                   }	
 		                      }
@@ -49,9 +49,9 @@ pipeline {
 			}   
 		
 		stage ('STAGE 4') {
-		agent { label 'master' }
+		agent { label 'slave_for_c' }
 			steps {
-				echo 'This is master with STAGE 4'
+				echo 'This is slave_for_c with STAGE 4'
 				sh 'sleep 10'
 			}	
 		}
