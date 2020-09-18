@@ -1,9 +1,8 @@
 pipeline {
-	agent none
+	agent any
 	
         stages {
 		stage ('STAGE 1') {
-		agent { label 'master' }
 		        stage ('C and java projects') {
 	                parallel {
 		                     steps {
@@ -40,14 +39,12 @@ pipeline {
 				}
 			}   
 		stage ('STAGE 3') {
-		        agent { label 'slave_for_c' }
 			steps {
 				echo 'This is slave_for_c with STAGE 3'
 				sh 'sleep 10'
 			}	
 		}
 		stage ('STAGE 4') {
-		        agent { label 'master' }
 			steps {
 				echo 'This is master with STAGE 4'
 				sh 'sleep 10'
