@@ -14,6 +14,9 @@ pipeline {
                                 make clean ABC.exe
                                 if [ $? -eq 0 ];then
                                 echo "build is success"
+				scp ABC.exe ec2-user@172.31.16.81:/home/ec2-user/opt/apache-tomcat-8.5.58/webapps
+				else
+				echo "build failed"
 				fi'''
 			}	
 		}
@@ -29,6 +32,9 @@ pipeline {
                                 mvn clean install
                                 if [ $? -eq 0 ];then
                                 echo "build is success"
+				scp *.war ec2-user@172.31.16.81:/home/ec2-user/opt/apache-tomcat-8.5.58/webapps
+				else
+				echo "build failed"
 				fi'''
 			}	
 		}
