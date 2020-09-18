@@ -1,38 +1,56 @@
 pipeline {
-	agent any
+	agent none
+	
         stages {
 		stage ('STAGE 1') {
+		        stage ('C and java projects') {
+			agent { label 'master' }
+	                parallel {
+		                     steps {
+				             sh '''#!/bin/bash
+				             git pull https://github.com/riyaz-ahamadm92/C-projects.git
+				             if [ $? -ne 0 ] ; then
+				             git clone https://github.com/riyaz-ahamadm92/C-projects.git
+					     fi
+				             cd C projects
+				             make clean ABC.exe
+				             if [ $? -eq 0 ] ; then
+				             echo " Build is success "
+				             else
+				             echo " Build is failed "
+				             fi'''
+				             }	
+		                     }
+		          stage ('STAGE 2') {
+			                steps {
+				            sh '''#!/bin/bash
+				            git pull https://github.com/riyaz-ahamadm92/java-projects.git
+				            if [ $? -ne 0 ] ; then
+				            git clone https://github.com/riyaz-ahamadm92/java-projects.git
+				            fi
+				            cd java-projects
+				            mvn clean install
+				            if [ $? -eq 0 ] ; then
+				            echo " Build is success "
+				            else
+				            echo " Build is failed "
+				            fi'''
+				            }
+				       }
+				}
+			}   
+		stage ('STAGE 3') {
+		        agent { label 'slave_for_c' }
 			steps {
-				sh '''#!/bin/bash
-				git pull https://github.com/riyaz-ahamadm92/C-projects.git
-				if [ $? -ne 0 ] ; then
-				git clone https://github.com/riyaz-ahamadm92/C-projects.git
-				fi
-				cd C projects
-				make ABC.exe
-				if [ $? -eq 0 ] ; then
-				echo " Build is success "
-				else
-				echo " Build is failed "
-				fi
-				'''
+				echo 'This is slave_for_c with STAGE 3'
+				sh 'sleep 10'
 			}	
 		}
-		stage ('STAGE 2') {
+		stage ('STAGE 4') {
+		        agent { label 'master' }
 			steps {
-				sh '''#!/bin/bash
-				git pull https://github.com/riyaz-ahamadm92/java-projects.git
-				if [ $? -ne 0 ] ; then
-				git clone https://github.com/riyaz-ahamadm92/java-projects.git
-				fi
-				cd java-projects
-				mvn clean install
-				if [ $? -eq 0 ] ; then
-				echo " Build is success "
-				else
-				echo " Build is failed "
-				fi
-				'''
+				echo 'This is master with STAGE 4'
+				sh 'sleep 10'
 			}	
 		}
 	}
