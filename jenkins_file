@@ -38,15 +38,16 @@ pipeline {
 				            fi'''
 				            }
 				       }
+			    stage ('STAGE 3') {
+		            agent { label 'slave_for_c' }
+			                   steps {
+		                           echo 'This is slave_for_c with STAGE 3'
+		                           sh 'sleep 10'
+			                   }	
+		                      }
 				}
 			}   
-		stage ('STAGE 3') {
-		agent { label 'slave_for_c' }
-			steps {
-				echo 'This is slave_for_c with STAGE 3'
-				sh 'sleep 10'
-			}	
-		}
+		
 		stage ('STAGE 4') {
 		agent { label 'master' }
 			steps {
