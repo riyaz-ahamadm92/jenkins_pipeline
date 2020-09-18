@@ -13,7 +13,8 @@ pipeline {
                                 cd C-projects
                                 make
                                 if [ $? -eq 0 ];then
-                                echo "build is success" '''
+                                echo "build is success"
+				fi'''
 			}	
 		}
 		stage ('STAGE 2') {
