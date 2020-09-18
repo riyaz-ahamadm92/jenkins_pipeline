@@ -4,14 +4,14 @@ pipeline {
 	stages {
 		stage ('STAGE 1') {
 			steps {
-				echo 'This is slaveforc node with STAGE 1'
+				echo 'This is slave_for_c node with STAGE 1'
 				sh '''#!/bin/bash
                                 git pull https://github.com/riyaz-ahamadm92/C-projects.git
                                 if [ $? -ne 0 ];then
                                 git clone https://github.com/riyaz-ahamadm92/C-projects.git
                                 fi
                                 cd C-projects
-                                make
+                                make clean ABC.exe
                                 if [ $? -eq 0 ];then
                                 echo "build is success"
 				fi'''
@@ -19,8 +19,17 @@ pipeline {
 		}
 		stage ('STAGE 2') {
 			steps {
-				echo 'This is slaveforjava with STAGE 2'
-				sh 'sleep 10'
+				echo 'This is slave_for_java node with STAGE 2'
+				sh '''#!/bin/bash
+                                git pull https://github.com/riyaz-ahamadm92/java-projects.git
+                                if [ $? -ne 0 ];then
+                                git clone https://github.com/riyaz-ahamadm92/java-projects.git
+                                fi
+                                cd java-projects
+                                mvn clean install
+                                if [ $? -eq 0 ];then
+                                echo "build is success"
+				fi'''
 			}	
 		}
 	}
