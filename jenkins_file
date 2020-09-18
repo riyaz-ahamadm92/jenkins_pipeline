@@ -3,8 +3,8 @@ pipeline {
 	
         stages {
 		stage ('STAGE 1') {
+		agent { label 'master' }
 		        stage ('C and java projects') {
-			agent { label 'master' }
 	                parallel {
 		                     steps {
 				             sh '''#!/bin/bash
