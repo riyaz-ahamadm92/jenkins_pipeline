@@ -1,10 +1,11 @@
 pipeline {
-	agent any
+	agent none
 	
         stages {
-		stage ('STAGE 1') {
+		stage ('C and java projects') {
+		agent { label 'master' }
 		  parallel {
-		           stage ('C and java projects') {
+		           stage ('C projects') {
 		                     steps {
 				             sh '''#!/bin/bash
 				             git pull https://github.com/riyaz-ahamadm92/C-projects.git
@@ -20,7 +21,7 @@ pipeline {
 				             fi'''
 				             }	
 		                     }
-		             stage ('STAGE 2') {
+		             stage ('java projects') {
 			                 steps {
 				            sh '''#!/bin/bash
 				            git pull https://github.com/riyaz-ahamadm92/java-projects.git
@@ -39,12 +40,14 @@ pipeline {
 				}
 			}   
 		stage ('STAGE 3') {
+		agent { label 'slave_for_c' }
 			steps {
 				echo 'This is slave_for_c with STAGE 3'
 				sh 'sleep 10'
 			}	
 		}
 		stage ('STAGE 4') {
+		agent { label 'master' }
 			steps {
 				echo 'This is master with STAGE 4'
 				sh 'sleep 10'
