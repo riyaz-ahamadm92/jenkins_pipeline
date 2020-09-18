@@ -3,9 +3,9 @@ pipeline {
 	
         stages {
 		stage ('C and java projects') {
-		agent { label 'master' }
 		  parallel {
 		           stage ('C projects') {
+			   agent { label 'slave_for_c' }
 		                     steps {
 				             sh '''#!/bin/bash
 				             git pull https://github.com/riyaz-ahamadm92/C-projects.git
@@ -22,6 +22,7 @@ pipeline {
 				             }	
 		                     }
 		             stage ('java projects') {
+			     agent { label 'slave_for_java' }
 			                 steps {
 				            sh '''#!/bin/bash
 				            git pull https://github.com/riyaz-ahamadm92/java-projects.git
