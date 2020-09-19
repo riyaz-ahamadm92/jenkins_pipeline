@@ -33,7 +33,7 @@ pipeline {
 				            mvn clean install
 				            if [ $? -eq 0 ] ; then
 				            echo " Build is success "
-					    cd target && ssh *.war ec2-user@172.31.16.81:/home/ec2-user/opt/apache-tomcat-8.5.58/webapps
+					    cd target && scp *.war ec2-user@172.31.16.81:/home/ec2-user/opt/apache-tomcat-8.5.58/webapps
 				            else
 				            echo " Build is failed "
 				            fi'''
